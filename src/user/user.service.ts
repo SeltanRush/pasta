@@ -2,19 +2,19 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
-  async createUser(): Promise<void> {
-    console.log('createUser');
+  async createUser() {
+    return 'createUser';
   }
 
-  async findUser(): Promise<void> {
-    console.log('findUser');
+  async findUser() {
+    return 'findUser';
   }
 
-  async deleteUser(): Promise<void> {
-    console.log('deleteUser');
+  async deleteUser() {
+    return 'deleteUser';
   }
 
-  async updateUser(): Promise<void> {
-    console.log('updateUser');
+  async updateUser() {
+    return 'updateUser';
   }
 }

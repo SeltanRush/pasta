@@ -5,8 +5,8 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async createUser(): Promise<void> {
-    this.userService.createUser();
+  @Post('create')
+  async createUser() {
+    return this.userService.createUser();
   }
 }
