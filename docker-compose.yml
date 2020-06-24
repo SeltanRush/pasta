@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: newPass123
+      POSTGRES_USER: pastauser
+      POSTGRES_DB: pastadb
+    volumes:
+      - '~/pgdata:/var/lib/postgresql/data'
+    ports:
+      - '5432:5432'
+
+  backend:
+    image: pasta-image
+    container_name: backend
+    restart: 'always'
+    depends_on:
+      - db
+    environment:
+      PG_NAME: pastadb
+      PG_USERNAME: pastauser
+      PG_PASSWORD: newPass123
+      PG_HOST: postgres
+      PG_PORT: 5432
+    ports:
+      - '3000:3000'
