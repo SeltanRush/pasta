@@ -1,7 +1,9 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
+import { genSalt, hash } from 'bcrypt';
+
+import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -14,7 +16,7 @@ export class UserService {
   async createUser({ email, password, username }: CreateUserDto) {
     const query = this.usersRepository
       .createQueryBuilder('user')
-      .where('user.username = :usename', { username })
+      .where('user.username = :username', { username })
       .orWhere('user.email = :email', { email });
 
     const userInDb = await query.getOne();
@@ -26,11 +28,19 @@ export class UserService {
       );
     }
 
+    const salt = await genSalt(10);
+    const passwordHash = await hash(password, salt);
+
     const user = new UserEntity();
     user.email = email;
     user.username = username;
+    user.password = passwordHash;
 
-    return 'userCreate';
+    await this.usersRepository.save(user);
+
+    return {
+      message: 'User succesfully created',
+    };
   }
 
   async findUserById(id: string) {

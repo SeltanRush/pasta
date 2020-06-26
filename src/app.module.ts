@@ -13,6 +13,7 @@ const typeormConfig: TypeOrmModuleOptions = {
   username: process.env.PG_USERNAME,
   password: process.env.PG_PASSWORD,
   port: Number(process.env.PG_PORT),
+  synchronize: true,
 };
 
 @Module({
