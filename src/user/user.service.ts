@@ -10,11 +10,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private usersRepository: Repository<UserEntity>,
+    private userRepository: Repository<UserEntity>,
   ) {}
 
   async createUser({ email, password, username }: CreateUserDto) {
-    const query = this.usersRepository
+    const query = this.userRepository
       .createQueryBuilder('user')
       .where('user.username = :username', { username })
       .orWhere('user.email = :email', { email });
@@ -36,15 +36,15 @@ export class UserService {
     user.username = username;
     user.password = passwordHash;
 
-    await this.usersRepository.save(user);
+    await this.userRepository.save(user);
 
     return {
       message: 'User succesfully created',
     };
   }
 
-  async findUserById(id: string) {
-    return 'findUser';
+  async findByEmail({ email }: { email: string }) {
+    return await this.userRepository.findOne({ email });
   }
 
   async deleteUser() {

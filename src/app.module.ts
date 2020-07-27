@@ -4,6 +4,7 @@ import 'dotenv/config';
 
 import { UserModule } from './user/user.module';
 import { UserEntity } from './user/user.entity';
+import { AuthModule } from './auth/auth.module';
 
 const typeormConfig: TypeOrmModuleOptions = {
   entities: [UserEntity],
@@ -17,7 +18,7 @@ const typeormConfig: TypeOrmModuleOptions = {
 };
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeormConfig), UserModule],
+  imports: [TypeOrmModule.forRoot(typeormConfig), UserModule, AuthModule],
   controllers: [],
   providers: [],
 })
