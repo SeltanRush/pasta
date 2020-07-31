@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { IsEmail, IsNotEmpty, IsHash } from 'class-validator';
+
+import { PostEntity } from '../posts/post.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -21,4 +23,10 @@ export class UserEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany(
+    () => PostEntity,
+    post => post.author,
+  )
+  posts: PostEntity[];
 }

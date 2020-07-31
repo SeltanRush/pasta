@@ -6,9 +6,10 @@ import { UserModule } from './user/user.module';
 import { UserEntity } from './user/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
+import { PostEntity } from './posts/post.entity';
 
 const typeormConfig: TypeOrmModuleOptions = {
-  entities: [UserEntity],
+  entities: [UserEntity, PostEntity],
   type: 'postgres',
   host: process.env.PG_HOST,
   database: process.env.PG_NAME,
