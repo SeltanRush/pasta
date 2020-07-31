@@ -30,7 +30,7 @@ export class AuthService {
       const accessToken = this.jwtService.sign(getPayload(userData));
 
       return {
-        access_token: accessToken,
+        accessToken,
       };
     });
   }
