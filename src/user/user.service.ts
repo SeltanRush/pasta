@@ -1,10 +1,10 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { genSalt, hash } from 'bcrypt';
 
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { getPasswordHash } from 'src/utils/getPasswordHash';
 
 @Injectable()
 export class UserService {
@@ -28,13 +28,10 @@ export class UserService {
       );
     }
 
-    const salt = await genSalt(10);
-    const passwordHash = await hash(password, salt);
-
     const user = new UserEntity();
     user.email = email;
     user.username = username;
-    user.password = passwordHash;
+    user.password = await getPasswordHash(password);
 
     await this.userRepository.save(user);
 
