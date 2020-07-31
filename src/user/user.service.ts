@@ -39,12 +39,16 @@ export class UserService {
     await this.userRepository.save(user);
 
     return {
-      message: 'User succesfully created',
+      user,
     };
   }
 
   async findByEmail({ email }: { email: string }) {
     return await this.userRepository.findOne({ email });
+  }
+
+  async findById(id: UserEntity['id']) {
+    return await this.userRepository.findOne(id);
   }
 
   async deleteUser() {
