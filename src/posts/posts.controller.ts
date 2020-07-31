@@ -3,7 +3,7 @@ import { Request } from 'express';
 
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 
-import { AddPostDto } from './add-post.dto';
+import { CreatePostDto } from './create-post.dto';
 import { PostsService } from './posts.service';
 import { UserPayload } from 'src/utils/jwt/getPayload';
 
@@ -18,10 +18,13 @@ export class PostsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post()
-  async addPost(@Req() req: Request, @Body() addPostDto: AddPostDto) {
+  @Post('create')
+  async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
     const user = req.user as UserPayload;
-    const post = this.postsService.addPost({ userId: user.id, addPostDto });
+    const post = this.postsService.createPost({
+      userId: user.id,
+      createPostDto,
+    });
 
     return {
       post,
