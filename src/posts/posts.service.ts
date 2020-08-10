@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -39,5 +43,25 @@ export class PostsService {
     return {
       post,
     };
+  }
+
+  async findUserPosts({ userId }: { userId: number }) {
+    const posts = await this.postsRepository.find({
+      where: {
+        author: {
+          id: userId,
+        },
+      },
+    });
+
+    console.log(posts);
+
+    if (!posts) {
+      throw new NotFoundException({
+        message: 'Not found any posts for current user',
+      });
+    }
+
+    return posts;
   }
 }
