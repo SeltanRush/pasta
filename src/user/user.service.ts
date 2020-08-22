@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { getPasswordHash } from 'src/utils/getPasswordHash';
+import { getPasswordHash } from 'utils/getPasswordHash';
 
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -42,11 +42,11 @@ export class UserService {
   }
 
   async findByEmail({ email }: { email: string }) {
-    return await this.userRepository.findOne({ email });
+    return await this.userRepository.findOne({ email, isActive: true });
   }
 
   async findById(id: UserEntity['id']) {
-    return await this.userRepository.findOne(id);
+    return await this.userRepository.findOne({ id, isActive: true });
   }
 
   async deleteUser() {

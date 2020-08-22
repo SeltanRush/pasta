@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
-import { UserEntity } from 'src/user/user.entity';
+
+import { UserEntity } from 'user/user.entity';
 
 @Entity('post')
 export class PostEntity {
@@ -21,4 +22,7 @@ export class PostEntity {
   )
   @IsNotEmpty()
   author: UserEntity;
+
+  @Column({ default: true })
+  isActive: boolean;
 }

@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/user/user.entity';
+import { UserEntity } from 'user/user.entity';
 
 export interface UserPayload {
   id: number;

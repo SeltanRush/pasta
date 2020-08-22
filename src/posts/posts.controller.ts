@@ -1,11 +1,21 @@
-import { Controller, Get, UseGuards, Req, Body, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Req,
+  Body,
+  Post,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { Request } from 'express';
 
-import { JwtAuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from 'auth/auth.guard';
+import { UserPayload } from 'utils/jwt/getPayload';
 
 import { CreatePostDto } from './create-post.dto';
 import { PostsService } from './posts.service';
-import { UserPayload } from 'src/utils/jwt/getPayload';
+import { convertPost } from 'utils/converters/response/convertPost';
 
 @Controller('posts')
 export class PostsController {
@@ -18,7 +28,7 @@ export class PostsController {
     const posts = await this.postsService.findUserPosts({ userId: user.id });
 
     return {
-      posts,
+      posts: posts.map(convertPost),
     };
   }
 
@@ -26,13 +36,25 @@ export class PostsController {
   @Post('create')
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
     const user = req.user as UserPayload;
-    const post = await this.postsService.createPost({
+    const { post } = await this.postsService.createPost({
       userId: user.id,
       createPostDto,
     });
 
     return {
-      post,
+      post: convertPost(post),
     };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  async deletePost(@Req() req: Request, @Param('id') id: string) {
+    const user = req.user as UserPayload;
+    await this.postsService.deletePost({
+      userId: user.id,
+      postId: Number(id),
+    });
+
+    return true;
   }
 }

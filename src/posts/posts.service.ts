@@ -6,8 +6,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UserEntity } from 'src/user/user.entity';
-import { UserService } from 'src/user/user.service';
+import { UserEntity } from 'user/user.entity';
+import { UserService } from 'user/user.service';
 
 import { PostEntity } from './post.entity';
 import { CreatePostDto } from './create-post.dto';
@@ -51,10 +51,10 @@ export class PostsService {
         author: {
           id: userId,
         },
+        isActive: true,
       },
+      relations: ['author'],
     });
-
-    console.log(posts);
 
     if (!posts) {
       throw new NotFoundException({
@@ -63,5 +63,30 @@ export class PostsService {
     }
 
     return posts;
+  }
+
+  async deletePost({ postId, userId }: { userId: number; postId: number }) {
+    const post = await this.postsRepository.findOne({
+      where: {
+        author: {
+          id: userId,
+        },
+        id: postId,
+      },
+    });
+
+    if (!post) {
+      return new NotFoundException('Couldn`t find post by id and user id');
+    }
+
+    await this.postsRepository.update(
+      {
+        id: postId,
+        author: {
+          id: userId,
+        },
+      },
+      { isActive: false },
+    );
   }
 }
