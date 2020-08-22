@@ -33,6 +33,15 @@ export class PostsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  async getPost(@Param('id') id: string) {
+    const { post } = await this.postsService.findPost({ postId: Number(id) });
+    return {
+      post: convertPost(post),
+    };
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post('create')
   async createPost(@Req() req: Request, @Body() createPostDto: CreatePostDto) {
     const user = req.user as UserPayload;

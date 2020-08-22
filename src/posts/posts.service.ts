@@ -76,7 +76,7 @@ export class PostsService {
     });
 
     if (!post) {
-      return new NotFoundException('Couldn`t find post by id and user id');
+      throw new NotFoundException('Couldn`t find post by id and user id');
     }
 
     await this.postsRepository.update(
@@ -88,5 +88,19 @@ export class PostsService {
       },
       { isActive: false },
     );
+  }
+
+  async findPost({ postId }: { postId: number }) {
+    const post = await this.postsRepository.findOne(postId, {
+      relations: ['author'],
+    });
+
+    if (!post) {
+      throw new NotFoundException();
+    }
+
+    return {
+      post,
+    };
   }
 }
