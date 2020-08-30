@@ -10,7 +10,6 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src",
-    "incremental": true,
-    "typeRoots": ["./@types/custom.d.ts"]
+    "incremental": true
   }
 }
