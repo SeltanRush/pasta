@@ -13,7 +13,7 @@ import { Request } from 'express';
 import { JwtAuthGuard } from 'auth/auth.guard';
 import { UserPayload } from 'utils/jwt/getPayload';
 
-import { CreatePostDto } from './create-post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 import { PostsService } from './posts.service';
 import { convertPost } from 'utils/converters/response/convertPost';
 

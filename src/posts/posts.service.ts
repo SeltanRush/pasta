@@ -10,7 +10,7 @@ import { UserEntity } from 'user/user.entity';
 import { UserService } from 'user/user.service';
 
 import { PostEntity } from './post.entity';
-import { CreatePostDto } from './create-post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
 
 @Injectable()
 export class PostsService {
