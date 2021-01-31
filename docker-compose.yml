@@ -12,18 +12,18 @@ services:
       - '~/pgdata:/var/lib/postgresql/data'
     ports:
       - '5432:5432'
-  # backend:
-  #   image: pasta-image
-  #   container_name: backend
-  #   restart: 'always'
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     PG_NAME: pastadb
-  #     PG_USERNAME: pastauser
-  #     PG_PASSWORD: newPass123
-  #     PG_HOST: postgres
-  #     PG_PORT: 5432
-  #     JWT_SECRET: superpupersecret
-  #   ports:
-  #     - '3000:3000'
+  backend:
+    image: pasta-image
+    container_name: backend
+    restart: 'always'
+    depends_on:
+      - db
+    environment:
+      PG_NAME: pastadb
+      PG_USERNAME: pastauser
+      PG_PASSWORD: newPass123
+      PG_HOST: postgres
+      PG_PORT: 5432
+      JWT_SECRET: superpupersecret
+    ports:
+      - '3000:3000'
