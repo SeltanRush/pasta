@@ -8,15 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { PostsModule } from './posts/posts.module';
 import { PostEntity } from './posts/post.entity';
 
-console.log({
-  type: 'postgres',
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  cloud: process.env.CLOUD_SQL_CONNECTION_NAME,
-});
-
 const typeormConfig: TypeOrmModuleOptions = {
   entities: [UserEntity, PostEntity],
   type: 'postgres',
