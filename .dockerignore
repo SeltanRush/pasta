@@ -6,3 +6,4 @@ npm-debug.log
 docker-volumes
 e2e
 test
+dist
