@@ -11,11 +11,10 @@ import { PostEntity } from './posts/post.entity';
 const typeormConfig: TypeOrmModuleOptions = {
   entities: [UserEntity, PostEntity],
   type: 'postgres',
-  host: process.env.PG_HOST,
-  database: process.env.PG_NAME,
-  username: process.env.PG_USERNAME,
-  password: process.env.PG_PASSWORD,
-  port: Number(process.env.PG_PORT),
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS,
   synchronize: true,
 };
 
